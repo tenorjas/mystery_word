@@ -24,9 +24,20 @@ app.engine("mustache", mustacheExpress());
 app.set("views", "./views");
 app.set("view engine", "mustache");
 
+let placeHolder = "_";
+let randomNumber = Math.floor(Math.random() * words.length);
+let word = words[randomNumber];
+console.log(`The mystery word is ${word}.`);
+let characters = word.split("");
+console.log(characters);
+let guesses = [];
+let numGuesses = 8;
+
 // define a home page
 app.get("/", function(request, response) {
-  response.render("main");
+  // let maskedWord = use `characters` and `guesses` to generate maskedWord
+  let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
+  response.render("main", { maskedWord: maskedWord, numGuesses: numGuesses });
 });
 
 // listen on port 3000
