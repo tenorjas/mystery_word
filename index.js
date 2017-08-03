@@ -48,6 +48,7 @@ app.get("/", function(request, response) {
 
 // Collect a guess from the form
 app.post("/guess", function(request, response) {
+  let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
   let guess = request.body.guess;
   if (!characters.includes(guess) && !guesses.includes(guess)) {
     numGuesses -= 1;
@@ -55,12 +56,17 @@ app.post("/guess", function(request, response) {
 
   if (guesses.includes(guess)) {
     // display message letting them know that they've already guessed that letter
+    errorMessage = `You've already guessed the letter ${guess}.  Please guess again.`;
   } else {
     errorMessage = "";
     guesses.push(guess);
   }
+  if (characters.join("") === maskedWord.join("")) {
+    response.render("youWin", { word: word });
+    return;
+  }
   if (numGuesses === 0) {
-    response.render("youLose");
+    response.render("youLose", { word: word });
     return;
   }
   response.redirect("/");

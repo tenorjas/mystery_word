@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>You Lose</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <span>You lose! The word is {{word}}.</span>
+      <span>Press button to play again.</span>
+
+      <form class="restart" action="/main" method="post">
+        <button type="submit" name="button">Play Again</button>
+      </form>
+      <!-- end of wrapper div -->
+    </div>
+
+  </body>
+</html>
