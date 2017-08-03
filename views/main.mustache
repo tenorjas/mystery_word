@@ -9,16 +9,17 @@
     <h1>Mystery Word</h1>
     <h2>You have {{numGuesses}} guesses left</h2>
     <div class="wrapper">
+      <span class="error">{{errorMessage}}</span>
       <span>
         {{#maskedWord}}
         {{.}}
         {{/maskedWord}}
       </span>
       <form class="guess" action="/guess" method="post">
-        <input type="text" name="" value="">
+        <input type="text" name="guess" value="">
         <button type="submit" name="button">Make a guess</button>
       </form>
-      <p>Letters guessed: None</p>
+      <p>Letters guessed: {{guesses}}</p>
       <!-- end of wrapper div -->
     </div>
   </body>

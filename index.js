@@ -32,12 +32,38 @@ let characters = word.split("");
 console.log(characters);
 let guesses = [];
 let numGuesses = 8;
+let errorMessage = "";
 
 // define a home page
 app.get("/", function(request, response) {
   // let maskedWord = use `characters` and `guesses` to generate maskedWord
   let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
-  response.render("main", { maskedWord: maskedWord, numGuesses: numGuesses });
+  response.render("main", {
+    maskedWord: maskedWord,
+    numGuesses: numGuesses,
+    guesses: guesses,
+    errorMessage: errorMessage
+  });
+});
+
+// Collect a guess from the form
+app.post("/guess", function(request, response) {
+  let guess = request.body.guess;
+  if (!characters.includes(guess) && !guesses.includes(guess)) {
+    numGuesses -= 1;
+  }
+
+  if (guesses.includes(guess)) {
+    // display message letting them know that they've already guessed that letter
+  } else {
+    errorMessage = "";
+    guesses.push(guess);
+  }
+  if (numGuesses === 0) {
+    response.render("youLose");
+    return;
+  }
+  response.redirect("/");
 });
 
 // listen on port 3000
