@@ -61,14 +61,17 @@ app.post("/guess", function(request, response) {
     errorMessage = "";
     guesses.push(guess);
   }
+
   if (characters.join("") === maskedWord.join("")) {
     response.render("youWin", { word: word });
     return;
   }
+
   if (numGuesses === 0) {
     response.render("youLose", { word: word });
     return;
   }
+
   response.redirect("/");
 });
 
