@@ -25,6 +25,7 @@ h2 {
 }
 
 .guess input {
+  font-size: 14pt;
   border-style: solid;
   border-width: 1px;
   border-color: black;
@@ -32,6 +33,7 @@ h2 {
 }
 
 .guess button {
+  font-size: 14pt;
   border-style: solid;
   border-width: 1px;
   border-color: black;
