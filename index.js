@@ -48,7 +48,6 @@ app.get("/", function(request, response) {
 
 // Collect a guess from the form
 app.post("/guess", function(request, response) {
-  let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
   let guess = request.body.guess;
   if (!characters.includes(guess) && !guesses.includes(guess)) {
     numGuesses -= 1;
@@ -61,8 +60,10 @@ app.post("/guess", function(request, response) {
     errorMessage = "";
     guesses.push(guess);
   }
+  let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
 
-  if (characters.join("") === maskedWord.join("")) {
+  console.log(maskedWord.join(""), word);
+  if (maskedWord.join("") === word) {
     response.render("youWin", { word: word });
     return;
   }
@@ -73,6 +74,25 @@ app.post("/guess", function(request, response) {
   }
 
   response.redirect("/");
+});
+
+app.post("/reset", function(request, response) {
+  let randomNumber = Math.floor(Math.random() * words.length);
+  let word = words[randomNumber];
+  console.log(`The mystery word is ${word}.`);
+  let characters = word.split("");
+  console.log(characters);
+  let guesses = [];
+  let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
+  let numGuesses = 8;
+  let errorMessage = "";
+
+  response.redirect("/", {
+    maskedWord: maskedWord,
+    numGuesses: numGuesses,
+    guesses: guesses,
+    errorMessage: errorMessage
+  });
 });
 
 // listen on port 3000
