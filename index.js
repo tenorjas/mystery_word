@@ -27,9 +27,8 @@ app.set("view engine", "mustache");
 let placeHolder = "_";
 let randomNumber = Math.floor(Math.random() * words.length);
 let word = words[randomNumber];
-console.log(`The mystery word is ${word}.`);
+console.log(word);
 let characters = word.split("");
-console.log(characters);
 let guesses = [];
 let numGuesses = 8;
 let errorMessage = "";
@@ -62,7 +61,6 @@ app.post("/guess", function(request, response) {
   }
   let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
 
-  console.log(maskedWord.join(""), word);
   if (maskedWord.join("") === word) {
     response.render("youWin", { word: word });
     return;
@@ -77,22 +75,15 @@ app.post("/guess", function(request, response) {
 });
 
 app.post("/reset", function(request, response) {
-  let randomNumber = Math.floor(Math.random() * words.length);
-  let word = words[randomNumber];
-  console.log(`The mystery word is ${word}.`);
-  let characters = word.split("");
-  console.log(characters);
-  let guesses = [];
-  let maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
-  let numGuesses = 8;
-  let errorMessage = "";
+  randomNumber = Math.floor(Math.random() * words.length);
+  word = words[randomNumber];
+  characters = word.split("");
+  guesses = [];
+  maskedWord = characters.map(letter => (guesses.includes(letter) ? letter : placeHolder));
+  numGuesses = 8;
+  errorMessage = "";
 
-  response.redirect("/", {
-    maskedWord: maskedWord,
-    numGuesses: numGuesses,
-    guesses: guesses,
-    errorMessage: errorMessage
-  });
+  response.redirect("/");
 });
 
 // listen on port 3000
