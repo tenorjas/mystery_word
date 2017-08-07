@@ -27,7 +27,6 @@ app.set("view engine", "mustache");
 let placeHolder = "_";
 let randomNumber = Math.floor(Math.random() * words.length);
 let word = words[randomNumber];
-console.log(word);
 let characters = word.split("");
 let guesses = [];
 let numGuesses = 8;
